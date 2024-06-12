@@ -9,7 +9,7 @@ import retrofit2.http.Part;
 
 public interface ApiService {
     @Multipart
-    @POST("create")
+    @POST("skill-providers/create")
     Call<RegisterResponse> registerUser(
             @Part MultipartBody.Part image,
             @Part("firstName") RequestBody firstName,
@@ -21,6 +21,20 @@ public interface ApiService {
             @Part("street") RequestBody street,
             @Part("city") RequestBody city
 
+    );
+
+    @Multipart
+    @POST("verify-providers/create")
+    Call<VerifyFileResponse> uploadDocument(
+            @Part("providerId") RequestBody providerId,
+            @Part MultipartBody.Part cacImage
+    );
+
+    @Multipart
+    @POST("verify-providers/create")
+    Call<VerifyFileResponse> uploadImage(
+            @Part("providerId") RequestBody providerId,
+            @Part MultipartBody.Part cacImage
     );
 }
 

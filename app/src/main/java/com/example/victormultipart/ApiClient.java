@@ -1,26 +1,28 @@
 package com.example.victormultipart;
 
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
-    private static final String BASE_URL = "http://handiworks.cosmossound.com.ng/api/skill-providers/"; // Replace this with your API base URL
+    private static final String BASE_URL = "https://handiworks.cosmossound.com.ng/api/";
 
     private static Retrofit retrofit;
 
     private static Retrofit getRetrofitInstance() {
-        if (retrofit == null) {
-//            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-//            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-//
-//            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-//            httpClient.addInterceptor(loggingInterceptor);
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .build();
+
+        if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
-//                    .client(httpClient.build())
+                    .client(client) // Pass the OkHttpClient instance directly
                     .build();
         }
         return retrofit;
@@ -30,4 +32,3 @@ public class ApiClient {
         return getRetrofitInstance().create(ApiService.class);
     }
 }
-

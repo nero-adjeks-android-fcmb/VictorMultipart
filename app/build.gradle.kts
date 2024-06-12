@@ -45,6 +45,5 @@ dependencies {
 
     // Picasso
     implementation("com.squareup.picasso:picasso:2.71828")
-    // OR Glide
-    // implementation("com.github.bumptech.glide:glide:4.12.0")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.1")
 }
